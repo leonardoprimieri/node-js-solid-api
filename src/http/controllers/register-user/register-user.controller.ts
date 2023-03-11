@@ -19,6 +19,7 @@ export async function registerUserController(
   try {
     const userRepository = new PrismaUsersRepository()
     const registerUserService = new RegisterUserService(userRepository)
+
     await registerUserService.execute({ email, name, password })
   } catch (err) {
     if (err instanceof UserAlreadyExistsError) {
