@@ -1,7 +1,7 @@
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
+import { InMemoryUsersRepository } from '@/repositories/user/in-memory-users-repository'
+import { InvalidCredentialsError } from '@/services/errors/invalid-credentials-error'
 import { hash } from 'bcryptjs'
 import { describe, expect, it } from 'vitest'
-import { InvalidCredentialsError } from '../errors/invalid-credentials-error'
 import { AuthenticateService } from './authenticate.service'
 
 describe('Authenticate Service', () => {
