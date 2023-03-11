@@ -44,7 +44,7 @@ describe('Register Service', () => {
 
     await registerService.execute(mockedUser)
 
-    expect(
+    await expect(
       async () => await registerService.execute(mockedUser),
     ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
