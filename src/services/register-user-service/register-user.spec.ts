@@ -1,8 +1,8 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { compare } from 'bcryptjs'
 import { expect, describe, it } from 'vitest'
-import { UserAlreadyExistsError } from './errors/user-already-exists-error'
-import { RegisterService } from './register.service'
+import { UserAlreadyExistsError } from '../errors/user-already-exists-error'
+import { RegisterUserService } from './register-user.service'
 
 describe('Register Service', () => {
   const mockedUser = {
@@ -13,23 +13,23 @@ describe('Register Service', () => {
 
   const makeSut = () => {
     const inMemoryUsersRepository = new InMemoryUsersRepository()
-    const registerService = new RegisterService(inMemoryUsersRepository)
+    const registerUserService = new RegisterUserService(inMemoryUsersRepository)
 
-    return registerService
+    return registerUserService
   }
 
   it('should be able to register', async () => {
-    const registerService = makeSut()
+    const registerUserService = makeSut()
 
-    const { user } = await registerService.execute(mockedUser)
+    const { user } = await registerUserService.execute(mockedUser)
 
     expect(user.id).toEqual(expect.any(String))
   })
 
   it('should hash user password', async () => {
-    const registerService = makeSut()
+    const registerUserService = makeSut()
 
-    const { user } = await registerService.execute(mockedUser)
+    const { user } = await registerUserService.execute(mockedUser)
 
     const isPasswordCorrectlyHashed = await compare(
       mockedUser.password,
@@ -40,12 +40,12 @@ describe('Register Service', () => {
   })
 
   it('should not be able to create an user that already exists', async () => {
-    const registerService = makeSut()
+    const registerUserService = makeSut()
 
-    await registerService.execute(mockedUser)
+    await registerUserService.execute(mockedUser)
 
     await expect(
-      async () => await registerService.execute(mockedUser),
+      async () => await registerUserService.execute(mockedUser),
     ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
 })
