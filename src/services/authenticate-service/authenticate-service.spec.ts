@@ -7,7 +7,6 @@ import { AuthenticateService } from './authenticate.service'
 describe('Authenticate Service', () => {
   const makeSut = () => {
     const usersRepository = new InMemoryUsersRepository()
-
     const authenticationService = new AuthenticateService(usersRepository)
 
     return {
