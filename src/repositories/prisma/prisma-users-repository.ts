@@ -1,7 +1,7 @@
 import { CreateUserDto } from '@/dtos/create-user.dto'
 import { prisma } from '@/lib/prisma'
 import { User } from '@prisma/client'
-import { UsersRepository } from '../users-repository'
+import { UsersRepository } from '../user/users-repository'
 
 export class PrismaUsersRepository implements UsersRepository {
   async create(data: CreateUserDto): Promise<User> {
@@ -20,5 +20,9 @@ export class PrismaUsersRepository implements UsersRepository {
     })
 
     return user
+  }
+
+  findById(id: string): Promise<User | null> {
+    throw new Error('Method not implemented.')
   }
 }
